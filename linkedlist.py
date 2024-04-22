@@ -44,23 +44,30 @@ class LinkedList:
         else:
             print("Student not found.")
     
-    # find delete node using id
-    def delete_student(self, node, student_id):
-        current_student = node
-        if (current_student.id == student_id and current_student == self.head): # if target node is head
-            self.head = self.head.next
+    # find and delete node using id
+    def delete_student(self, student_id):
+        current_student = self.head
+        previous_student = None
+    
+        # remove head
+        if current_student != None and current_student.id == student_id:
+            self.head = current_student.next
             print("Student removed.")
             return
-        if (current_student.next != None):
-            if (current_student.next.next == None and current_student.next.id != student_id): # if last node is not target
-                print("Student not found.")
-            elif(current_student != None and current_student.next.id != data): # if the next node is not the target
-                self.search(current_student.next, student_id)
-            else:                                           # if the next node is the target
-                current_student.next = current_student.next.next
-                print("Student removed.")
-        else:
+    
+        # traverse list
+        while current_student != None and current_student.id != student_id:
+            previous_student = current_student
+            current_student = current_student.next
+    
+        # If the node with the given id was not found
+        if current_student == None:
             print("Student not found.")
+            return
+    
+        # Unlink the node from the linked list
+        previous_student.next = current_student.next
+        print("Student removed.")
     
     # Update student records
     def update_student(self, student_id):
@@ -112,7 +119,7 @@ def main():
         
         if choice == "1":
             # Add a student
-            id = input("Enter student's id: ") # remove once faker implemented
+            id = input("Enter student's id: ")
             name = input("Enter student's name: ")
             dob = input("Enter student's DOB (YYYY-MM-DD): ")
             address = {
@@ -127,7 +134,7 @@ def main():
         elif choice == "2":
             # Delete a student
             student_id = int(input("Enter the student ID to delete: "))
-            linked_list.delete_student(linked_list.head, student_id)
+            linked_list.delete_student(student_id)
         elif choice == "3":
             # Search for a student
             search_option = input("Do you know the student ID? (yes/no): ")
