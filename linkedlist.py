@@ -1,3 +1,5 @@
+import time
+
 # Create a Node class to create a node
 class Student:
     def __init__(self, id, name, dob, address):
@@ -71,7 +73,9 @@ class LinkedList:
     
     # Update student records
     def update_student(self, student_id):
+        start_time = time.time()
         student = self.search(self.head, student_id)
+        print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
         if student:
             print(f"Current information: ID: {student.id}, Name: {student.name}, DOB: {student.dob}, Address: {student.address}")
             # Update the student's information (except ID)
@@ -129,21 +133,28 @@ def main():
                 "zip": input("Enter student's zip code: ")
             }
             student = Student(id, name, dob, address)
+            start_time = time.time()
             linked_list.insert(student)
             print("Student added successfully.")
+            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
         elif choice == "2":
             # Delete a student
             student_id = int(input("Enter the student ID to delete: "))
+            start_time = time.time()
             linked_list.delete_student(student_id)
+            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
         elif choice == "3":
             # Search for a student
             search_option = input("Do you know the student ID? (yes/no): ")
             if search_option.lower() == "yes":
                 student_id = int(input("Enter the student ID: "))
+                start_time = time.time()
                 linked_list.search_student_by_id(student_id)
             else:
                 name = input("Enter the student's name: ")
+                start_time = time.time()
                 linked_list.search_student_by_name(name)
+            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
         elif choice == "4":
             # Update a student record
             student_id = int(input("Enter the student ID to update: "))
