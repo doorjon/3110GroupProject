@@ -1,4 +1,8 @@
 import time
+from faker import Faker
+fake = Faker()
+import sys
+sys.setrecursionlimit(200000)
 
 # Create a Node class to create a node
 class Student:
@@ -103,6 +107,21 @@ class LinkedList:
 def main():
     # initialize list
     linked_list = LinkedList()
+
+    # Automatically generate and add 100,000 students
+    for _ in range(100000):
+        id = fake.unique.random_int(min=1, max=999999)
+        name = fake.name()
+        dob = fake.date_of_birth().strftime('%Y-%m-%d')
+        address = {
+            "street": fake.street_address(),
+            "city": fake.city(),
+            "state": fake.state(),
+            "zip": fake.zipcode()
+        }
+        student = Student(id, name, dob, address)
+        linked_list.insert(student)
+        print("Student added successfully.")
     
     student = Student(1, "john doe", "9/11/2001", "address1")
     linked_list.insert(student)
