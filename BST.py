@@ -161,7 +161,7 @@ def main():
         print("4. Update a student record")
         print("5. Print BST of students")
         print("6. Exit")
-        choice = input("Enter your choice (1-5): ")
+        choice = input("Enter your choice (1-6): ")
 
         if choice == "1":
             # Add a student
