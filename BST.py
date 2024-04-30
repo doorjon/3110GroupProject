@@ -1,10 +1,13 @@
+# importing Faker
 from faker import Faker
 fake = Faker()
+
+# importing time record settings
 import time
 import sys
 sys.setrecursionlimit(200000)
 
-
+# class to contain all student record information
 class Student:
     def __init__(self, id, name, dob, address):
         self.id = id
@@ -14,7 +17,7 @@ class Student:
         self.left = None  # For BST
         self.right = None  # For BST
 
-
+# BST class, facilitates parent and children nodes structure
 class BST:
     def __init__(self):
         self.root = None
@@ -37,9 +40,10 @@ class BST:
             else:
                 self._insert_recursive(current.right, student)
 
+# bst is what contains and represents the student recordes organized as a BST structure
 bst = BST()
 
-# Insert 100,000 students
+# Insert 100,000 students using the faker integration
 for _ in range(100000):
     id = fake.unique.random_int(min=1, max=999999)
     name = fake.first_name()
@@ -53,12 +57,13 @@ for _ in range(100000):
     student = Student(id, name, dob, address)
     bst.insert(student)
 
-
-
+# Function to delete student by id, takes a string variable as parameter, represents the id of the student they would like to delete 
 def delete_student_by_id(student_id):
     bst.root = delete_from_bst(bst.root, student_id)
 
-
+# Helper function for the delete_student_by_id functions, uses if statements to check on node 1)existence
+# 2) its value compared to its right child, 3) value compared to left child 4) find the node that perfectly fits its value then removed,
+# if none found, error message returned
 def delete_from_bst(node, student_id):
     if node is None:
         return None
@@ -86,7 +91,7 @@ def search_student_by_id(student_id):
     else:
         print("Student not found.")
 
-
+# Function to search for node using student node id information
 def search_in_bst(node, student_id):
     if node is None or node.id == student_id:
         return node
@@ -94,7 +99,7 @@ def search_in_bst(node, student_id):
         return search_in_bst(node.left, student_id)
     return search_in_bst(node.right, student_id)
 
-
+# Function to search BST bst using student node name information
 def search_student_by_name(name):
     result = _search_by_name(bst.root, name)
     if result:
