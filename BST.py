@@ -122,9 +122,9 @@ def find_min_value(node):
 # Update student records
 def update_student(student_id):
     # Find the student in the BST
-    start_time = time.time()
+    start_time = time.perf_counter()
     student = search_in_bst(bst.root, student_id)
-    print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
+    print("--- %s nanoseconds ---" % ((time.perf_counter() - start_time) * 1000000000))
     if student:
         print(f"Current information: ID: {student.id}, Name: {student.name}, DOB: {student.dob}, Address: {student.address}")
         # Update the student's information (except ID)
@@ -175,32 +175,32 @@ def main():
                 "zip": input("Enter student's zip code: ")
             }
             student = Student(id, name, dob, address)
-            start_time = time.time()
+            start_time = time.perf_counter()
             bst.insert(student)
             print("Student added successfully.")
-            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
+            print("--- %s nanoseconds ---" % ((time.perf_counter() - start_time) * 1000000000))
         elif choice == "2":
             # Delete a student
             student_id = int(input("Enter the student ID to delete: "))
-            start_time = time.time()
+            start_time = time.perf_counter()
             delete_student_by_id(student_id)
             print("Student deleted successfully.")
-            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
+            print("--- %s nanoseconds ---" % ((time.perf_counter() - start_time) * 1000000000))
         elif choice == "3":
             # Search for a student
             search_option = input("Do you know the student ID? (yes/no): ")
             if search_option.lower() == "yes":
                 student_id = int(input("Enter the student ID: "))
-                start_time = time.time()
+                start_time = time.perf_counter()
                 search_student_by_id(student_id)
             elif search_option.lower() == "no":
                 name = input("Enter the student's name: ")
-                start_time = time.time()
+                start_time = time.perf_counter()
                 search_student_by_name(name)
             else:
                 print("Incorrect Input")
                 continue
-            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
+            print("--- %s nanoseconds ---" % ((time.perf_counter() - start_time) * 1000000000))
         elif choice == "4":
             # Update a student record
             student_id = int(input("Enter the student ID to update: "))
