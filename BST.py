@@ -55,8 +55,8 @@ for _ in range(100000):
 
 
 
-def delete_student_by_id(self, student_id):
-    self.root = self._delet_from_bst(self.root, student_id)
+def delete_student_by_id(student_id):
+    bst.root = delete_from_bst(bst.root, student_id)
 
 
 def delete_from_bst(node, student_id):
@@ -82,7 +82,7 @@ def search_student_by_id(student_id):
     # Search in BST
     result = search_in_bst(bst.root, student_id)
     if result:
-        print(f"Found student: ID: {result.id}, Name: {result.name}, DOB: {result.dob}, Address: {result.address}")
+        print(f"Found student by ID: ID: {result.id}, Name: {result.name}, DOB: {result.dob}, Address: {result.address}")
     else:
         print("Student not found.")
 
@@ -95,17 +95,21 @@ def search_in_bst(node, student_id):
     return search_in_bst(node.right, student_id)
 
 
-def search_student_by_name(self, name):
-    return self._serach_by_name(self.root, name)
+def search_student_by_name(name):
+    result = _search_by_name(bst.root, name)
+    if result:
+        print(f"Found student by Name: ID: {result.id}, Name: {result.name}, DOB: {result.dob}, Address: {result.address}")
+    else:
+        print("Student not found.")
 
 
-def _search_by_name(self, node, name):
+def _search_by_name(node, name):
     if node is None:
         return node
     if node.name == name:
         return node
-    left_result = self._search_by_name(node.left, name)
-    right_result = self._search_by_name(node.right, name)
+    left_result = _search_by_name(node.left, name)
+    right_result = _search_by_name(node.right, name)
     return left_result if left_result else right_result
 
 
@@ -136,14 +140,16 @@ def update_student(student_id):
     else:
         print("Student not found.")
 
-
-def printBST(student)
-    if student is not None:
-        printBST(student.left)
-        print(f"ID: {student.id}, Name: {student.name}, DOB: {student.dob}, Address: {student.address}")
-        printBST(student.right)
-    elif student is None:
+# Printing Out Student Records
+def printBST(student):
+    if student is None:
         print("NO STUDENTS IN THE BST DATA STRUCTURE")
+    else:
+        if student.left:
+            printBST(student.left)
+        print(f"ID: {student.id}, Name: {student.name}, DOB: {student.dob}, Address: {student.address}")
+        if student.right:
+            printBST(student.right)
 
 
 def main():
@@ -187,10 +193,13 @@ def main():
                 student_id = int(input("Enter the student ID: "))
                 start_time = time.time()
                 search_student_by_id(student_id)
-            else:
+            elif search_option.lower() == "no":
                 name = input("Enter the student's name: ")
                 start_time = time.time()
                 search_student_by_name(name)
+            else:
+                print("Incorrect Input")
+                continue
             print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
         elif choice == "4":
             # Update a student record
@@ -205,7 +214,7 @@ def main():
             print("Exiting the BST Student Management System.")
             break
         else:
-            print("Invalid choice. Please enter a number between 1 and 5.")
+            print("Invalid choice. Please enter a number between 1 and 6.")
 
 if __name__ == "__main__":
     main()
