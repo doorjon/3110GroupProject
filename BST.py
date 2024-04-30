@@ -1,6 +1,9 @@
 from faker import Faker
-
 fake = Faker()
+import time
+import sys
+sys.setrecursionlimit(200000)
+
 
 class Student:
     def __init__(self, id, name, dob, address):
@@ -112,11 +115,12 @@ def find_min_value(node):
         current = current.left
     return current
 
-
 # Update student records
 def update_student(student_id):
     # Find the student in the BST
+    start_time = time.time()
     student = search_in_bst(bst.root, student_id)
+    print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
     if student:
         print(f"Current information: ID: {student.id}, Name: {student.name}, DOB: {student.dob}, Address: {student.address}")
         # Update the student's information (except ID)
@@ -133,6 +137,15 @@ def update_student(student_id):
         print("Student not found.")
 
 
+def printBST(student)
+    if student is not None:
+        printBST(student.left)
+        print(f"ID: {student.id}, Name: {student.name}, DOB: {student.dob}, Address: {student.address}")
+        printBST(student.right)
+    elif student is None:
+        print("NO STUDENTS IN THE BST DATA STRUCTURE")
+
+
 def main():
     while True:
         print("\nStudent Management System")
@@ -140,7 +153,8 @@ def main():
         print("2. Delete a student")
         print("3. Search for a student")
         print("4. Update a student record")
-        print("5. Exit")
+        print("5. Print BST of students")
+        print("6. Exit")
         choice = input("Enter your choice (1-5): ")
 
         if choice == "1":
@@ -155,29 +169,40 @@ def main():
                 "zip": input("Enter student's zip code: ")
             }
             student = Student(id, name, dob, address)
+            start_time = time.time()
             bst.insert(student)
             print("Student added successfully.")
+            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
         elif choice == "2":
             # Delete a student
             student_id = int(input("Enter the student ID to delete: "))
+            start_time = time.time()
             delete_student_by_id(student_id)
             print("Student deleted successfully.")
+            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
         elif choice == "3":
             # Search for a student
             search_option = input("Do you know the student ID? (yes/no): ")
             if search_option.lower() == "yes":
                 student_id = int(input("Enter the student ID: "))
+                start_time = time.time()
                 search_student_by_id(student_id)
             else:
                 name = input("Enter the student's name: ")
+                start_time = time.time()
                 search_student_by_name(name)
+            print("--- %s nanoseconds ---" % ((time.time() - start_time) * 1000000000))
         elif choice == "4":
             # Update a student record
             student_id = int(input("Enter the student ID to update: "))
             update_student(student_id)
         elif choice == "5":
+            # Printing the BST of student records
+            print("Printing The BST of Student Recoreds:")
+            printBST(bst.root)
+        elif choice == "6":
             # Exit the program
-            print("Exiting the Student Management System.")
+            print("Exiting the BST Student Management System.")
             break
         else:
             print("Invalid choice. Please enter a number between 1 and 5.")
